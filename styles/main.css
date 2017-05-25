@@ -14,60 +14,49 @@ body{
   min-height: 100%;
 }
 
-body.landing{
-  background-color: rgb(58,23,63);
+.navbar {
+    position: relative;
+    padding: 0.5rem;
+    background-color: rgba(101,18,95,0.5);
+    z-index: 1;
 }
+
 .navbar .logo {
   position: relative;
   left: 2rem;
+  cursor:pointer;
 }
-.hero-content {
-    position: relative;
-    min-height: 600px;
-    background-image: url(../assets/images/bloc_jams_bg.jpg);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-}
-.hero-content .hero-title{
-  position: absolute;
-  top: 40%;
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  width: 100%;
-  text-align: center;
-  font-size: 4rem;
-  font-weight: 300;
-  text-transform: uppercase;
-  letter-spacing: 0.5rem;
-  text-shadow: 1px 1px 0px rgb(58,23,63);
-}
-.selling-points {
-    position: relative;
+
+.navbar .links-container {
     display: table;
-    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100px;
+    color: white;
+    text-decoration: none;
 }
 
-.point{
-    display: table-cell;
-    position: relative;
-    width: 33.3%;
-    padding: 2rem;
-    text-align: center;
+.links-container .navbar-link {
+  display: table-cell;
+  position: relative;
+  height: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  vertical-align: middle;
+  color: white;
+  font-size: 0.625rem;
+  letter-spacing: 0.05rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.point .point-title {
-  font-size: 1.25rem;
-}
-
-.ion-music-note,
-.ion-radio-waves,
-.ion-iphone {
+.links-container .navbar-link:hover {
     color: rgb(233,50,117);
-    font-size: 5rem;
 }
+
 .container {
     margin: 0 auto;
     max-width: 64rem;
@@ -90,4 +79,14 @@ body.landing{
 }
 @media (min-width: 1024px) {
     html { font-size: 120%; }
+}
+
+.clearfix::before,
+.clearfix::after {
+  content: " ";
+  display: table;
+}
+
+.clearfix::after {
+  clear: both;
 }
