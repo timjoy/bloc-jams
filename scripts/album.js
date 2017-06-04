@@ -28,6 +28,19 @@ var albumPicasso = {
          { title: 'Wrong phone number', duration: '2:15'}
      ]
  };
+
+ var albumAtkinson = {
+     title: 'The Blunder',
+     artist: 'Rowan Atkinson',
+     label: 'HauteCouture',
+     year: '2001',
+     albumArtUrl: 'assets/images/album_covers/12.png',
+     songs: [
+          { title: 'UK Ramble', duration: '3:30' },
+          { title: 'Funeral Party', duration: '15:09' },
+      ]
+ };
+
  var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -63,5 +76,16 @@ var albumPicasso = {
  };
 
  window.onload = function() {
-     setCurrentAlbum(albumPicasso);
+     setCurrentAlbum(albumAtkinson);
  };
+
+  album.albumArtUrl.innerHTML
+    }
+
+var albumArray = ["albumPicasso", "albumMarconi", "albumAtkinson"]
+ window.onload = function(){
+     var albumToggle = document.getElementByID(["albumPicasso", "albumMarconi", "albumAtkinson"];
+
+     window.addEventListener("scroll") {
+       animatePoints(albumArray);
+     }
