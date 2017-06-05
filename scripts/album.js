@@ -54,13 +54,13 @@ var albumPicasso = {
  };
  var setCurrentAlbum = function(album) {
      // #1
-     var albumTitle = document.getElementsByClassName('album-view-title')[0];
-     var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-     var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-     var albumImage = document.getElementsByClassName('album-cover-art')[0];
-     var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+ var albumTitle = document.getElementsByClassName('album-view-title')[0];
+ var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+ var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+ var albumImage = document.getElementsByClassName('album-cover-art')[0];
+ var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
 
-     // #2
+ var setCurrentAlbum = function(album) {
      albumTitle.firstChild.nodeValue = album.title;
      albumArtist.firstChild.nodeValue = album.artist;
      albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
@@ -71,21 +71,41 @@ var albumPicasso = {
 
      // #4
      for (var i = 0; i < album.songs.length; i++) {
-         albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
+         albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].length);
      }
  };
+ var albums = [albumPicasso, albumMarconi, albumAtkinson];
 
  window.onload = function() {
-     setCurrentAlbum(albumAtkinson);
- };
+     setCurrentAlbum(albumPicasso);
 
-  album.albumArtUrl.innerHTML
-    }
+     var albums = [albumPicasso, albumMarconi, albumAtkinson];
+     var albumImage = document.getElementsByClassName('album-cover-art');
+     var index = 1;
+     albumImage.addEventListener("click", function(event) {
+        console.log("clicked!");
+        setCurrentAlbum(albums[index]);
+        index++;
+        if (index == albums.length) {
+            index = 0;
+        }
+     });
+ }
 
-var albumArray = ["albumPicasso", "albumMarconi", "albumAtkinson"]
- window.onload = function(){
-     var albumToggle = document.getElementByID(["albumPicasso", "albumMarconi", "albumAtkinson"];
+    //  var albumToggle = document.getElementByID(["albumPicasso", "albumMarconi", "albumAtkinson"]);
 
-     window.addEventListener("scroll") {
-       animatePoints(albumArray);
-     }
+    //  window.addEventListener("scroll") {
+    //    animatePoints(albumArray);
+    //  }
+
+
+    //  var albums = [albumPicasso, albumMarconi, albumAtkinson];
+    //  var index = 1;
+    //  albumImage.addEventListener("click", function(event) {
+    //      setCurrentAlbum(albums[index]);
+    //      index++;
+    //      if (index == albums.length) {
+    //          index = 0;
+    //      }
+    //  });
+  //album.albumArtUrl.innerHTML
