@@ -153,6 +153,7 @@ window.onload = function() {
   // album-view-song-item
   // ion-play
   // ion-play
+  
   var getSongItem = function(element) {
     switch (element.className) {
         case 'album-song-button':
