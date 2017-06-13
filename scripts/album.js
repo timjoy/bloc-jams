@@ -137,7 +137,7 @@ window.onload = function() {
   // function findParentByClassName(){
     //document.getElementsByClassName('song-item-number').addEventListener('click', function (event), true){
     //    console.log(event.target);
-    //    if event.target == parentElement
+  var currentParent = element.parentElement;  //    if event.target == parentElement
   var findParentByClassName = function(element, targetClass) {
     if (element) {
         var currentParent = element.parentElement;
@@ -146,6 +146,14 @@ window.onload = function() {
         }
         return currentParent;
     }
+    else if {
+      element.parentElement === null
+      }
+      console.log("No parent found.");
+    else if {
+      currentParent != currentParent.className
+      }
+      console.log("No parent found with that class name.");
   };
   // song-item-number
   // song-item-duration
@@ -153,7 +161,7 @@ window.onload = function() {
   // album-view-song-item
   // ion-play
   // ion-play
-  
+
   var getSongItem = function(element) {
     switch (element.className) {
         case 'album-song-button':
