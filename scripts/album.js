@@ -182,3 +182,41 @@ $(document).ready(function() {
       $previousSongNumberCell.html(pauseButtonTemplate);
       $lastSongNumberCell.html(lastSongNumber);
   };
+
+// Create a setSong function that takes one argument:
+//songNumber
+function setSong(songNumber){
+//and assigns currentlyPlayingSongNumber
+//and currentSongFromAlbum a new value based on the new
+//songNumber
+//note: these variables are globally set to "null"
+
+//vanilla JS version:
+  currentlyPlayingSongNumber = currentSongIndex+1;
+  currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
+//jQuery version:
+  $('currentlyPlayingSongNumber').empty();
+  $('currentlyPlayingSongNumber').append('currentSongIndex'+1);
+  $('currentSongFromAlbum').empty();
+  $('currentSongFromAlbum').append(currentAlbum.songs[currentSongIndex]);
+//note: I don't know if the preceding 4 lines are kosher,
+//because I'm refactoring a VARIABLE from a js file, not
+//a class or an html element.  Perhaps I should have used the
+//".attr()" method.
+// My jQuery version seems more verbose.
+};
+
+//Replace all instances where we manually assign values
+//to these functions with a call to setSong().
+setSong(songNumber){
+};
+
+//Write a function named getSongNumberCell that
+//takes one argument, number, and returns the song
+//number element that corresponds to that song number.
+function getSongNumberCell(number){
+  //???I'm in a bit over my head here.
+}
+//Replace all instances where we use the selector
+//with a getSongNumberCell() call.
+getSongNumberCell(number);
