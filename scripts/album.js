@@ -134,19 +134,33 @@ $(document).ready(function() {
   setCurrentAlbum(albumPicasso);
   $previousButton.click(previousSong);
   $nextButton.click(nextSong);
+//Create a variable to hold the $('.main-controls .play-pause') //selector and add a click() event to it in the $(document).ready() //block with togglePlayFromPlayerBar() as an event handler.
+  var $playpauseButton = $('.main-controls .play-pause');
+  $('.main-controls .play-pause').click(function togglePlayFromPlayerBar(){
+//Write a function so that users can play and pause a song from the //bar, as shown in the demo above. The function should be named //togglePlayFromPlayerBar(), take no arguments, and have the following //Bbehavior:
+//If a song is paused and the play button is clicked in the player //bar, it will
+    if ($('.control-group main-controls').child === $('.ion-pause'))&&
+//instead of "&&", use an if statement inside of the if statement?
+    ($('.ion-play').click()){
+//Change the song number cell from a play button to a pause button
+      $('.ion-play') === $('.ion-pause');
+//Change the HTML of the player bar's play button to a pause button
+      playerBarPlayButton === playerBarPauseButton;
+//Play the song
+      currentSoundFile.play();
+    }
+//If the song is playing (so a current sound file exist), and the //pause button is clicked
+//   else if $('.control-group main-con;trols').child === $('.ion-play'){
+    else if ((currentSoundFile != null) && ($('.ion-pause').click)){
+//Change the  song number cell from a pause button to a play button
+//Change the HTML of the player bar's pause button to a play button
+      playerBarPauseButton === playerBarPlayButton;
+//Pause the song
+      currentSoundFile.pause();
+    }  
 });
-  // var albumImage = document.getElementsByClassName('album-cover-art')[0];
-  // var albums = [albumPicasso, albumMarconi, albumAtkinson];
-  // var index = 1;
-  // albumImage.addEventListener("click", function(event) {
-  //   setCurrentAlbum(albums[index]);
-  //   index++;
-  //   if (index == albums.length) {
-  //       index = 0;
-  //   }
-  // });
 
-  // var currentParent = element.parentElement;  //    if event.target == parentElement
+
 
   var nextSong = function() {
       var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
@@ -198,7 +212,7 @@ $(document).ready(function() {
 
       $('.main-controls .play-pause').html(playerBarPauseButton);
 
-      var $previousSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);  
+      var $previousSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
       var $lastSongNumberCell = getSongNumberCell(lastSongNumber);
 
       $previousSongNumberCell.html(pauseButtonTemplate);
