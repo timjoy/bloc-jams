@@ -77,7 +77,7 @@ var createSongRow = function(songNumber, songName, songLength) {
         $row.find('.song-item-number').click(clickHandler);
         $row.hover(onHover, offHover);
         return $row;
-    };
+};
 
 var setCurrentAlbum = function(album) {
    // #1
@@ -103,6 +103,77 @@ var setCurrentAlbum = function(album) {
        console.log($newRow);
        $albumSongList.append($newRow);
    }
+};
+
+var updateSeekBarWhileSongPlays = function() {
+    if (currentSoundFile) {
+         // #10
+        currentSoundFile.bind('timeupdate', function(event) {
+             // #11
+            var seekBarFillRatio = this.getTime() / this.getDuration();
+            var $seekBar = $('.seek-control .seek-bar');
+
+            updateSeekPercentage($seekBar, seekBarFillRatio);
+        });
+    }
+};
+
+var updateSeekPercentage = function($seekBar, seekBarFillRatio) {
+   var offsetXPercent = seekBarFillRatio * 100;
+    // #1
+   offsetXPercent = Math.max(0, offsetXPercent);
+   offsetXPercent = Math.min(100, offsetXPercent);
+
+    // #2
+   var percentageString = offsetXPercent + '%';
+   $seekBar.find('.fill').width(percentageString);
+   $seekBar.find('.thumb').css({left: percentageString});
+};
+
+var setupSeekBars = function() {
+    var $seekBars = $('.player-bar .seek-bar');
+
+    $seekBars.click(function(event) {
+         // #3
+        var offsetX = event.pageX - $(this).offset().left;
+        var barWidth = $(this).width();
+         // #4
+        var seekBarFillRatio = offsetX / barWidth;
+
+        if ($(this).parent().attr('class') == 'seek-control') {
+            seek(seekBarFillRatio * currentSoundFile.getDuration());
+        } else {
+            setVolume(seekBarFillRatio * 100);
+        }
+         // #5
+        updateSeekPercentage($(this), seekBarFillRatio);
+    });
+
+    $seekBars.find('.thumb').mousedown(function(event) {
+         // #8
+        var $seekBar = $(this).parent();
+
+         // #9
+        $(document).bind('mousemove.thumb', function(event){
+            var offsetX = event.pageX - $seekBar.offset().left;
+            var barWidth = $seekBar.width();
+            var seekBarFillRatio = offsetX / barWidth;
+
+            if ($seekBar.parent().attr('class') == 'seek-control') {
+                seek(seekBarFillRatio * currentSoundFile.getDuration());
+            } else {
+                setVolume(seekBarFillRatio);
+            }
+
+            updateSeekPercentage($seekBar, seekBarFillRatio);
+        });
+
+         // #10
+        $(document).bind('mouseup.thumb', function() {
+            $(document).unbind('mousemove.thumb');
+            $(document).unbind('mouseup.thumb');
+        });
+    });
 };
 
 var trackIndex = function(album, song) {
@@ -132,34 +203,27 @@ var $nextButton = $('.main-controls .next');
 
 $(document).ready(function() {
   setCurrentAlbum(albumPicasso);
+  setupSeekBars();
   $previousButton.click(previousSong);
   $nextButton.click(nextSong);
-//Create a variable to hold the $('.main-controls .play-pause') //selector and add a click() event to it in the $(document).ready() //block with togglePlayFromPlayerBar() as an event handler.
-  var $playpauseButton = $('.main-controls .play-pause');
-  $('.main-controls .play-pause').click(function togglePlayFromPlayerBar(){
-//Write a function so that users can play and pause a song from the //bar, as shown in the demo above. The function should be named //togglePlayFromPlayerBar(), take no arguments, and have the following //Bbehavior:
-//If a song is paused and the play button is clicked in the player //bar, it will
-    if ($('.control-group main-controls').child === $('.ion-pause'))&&
-//instead of "&&", use an if statement inside of the if statement?
-    ($('.ion-play').click()){
-//Change the song number cell from a play button to a pause button
-      $('.ion-play') === $('.ion-pause');
-//Change the HTML of the player bar's play button to a pause button
-      playerBarPlayButton === playerBarPauseButton;
-//Play the song
-      currentSoundFile.play();
-    }
-//If the song is playing (so a current sound file exist), and the //pause button is clicked
-//   else if $('.control-group main-con;trols').child === $('.ion-play'){
-    else if ((currentSoundFile != null) && ($('.ion-pause').click)){
-//Change the  song number cell from a pause button to a play button
-//Change the HTML of the player bar's pause button to a play button
-      playerBarPauseButton === playerBarPlayButton;
-//Pause the song
-      currentSoundFile.pause();
-    }  
-});
 
+  var $mainPlayPause = $('.main-controls .play-pause');
+
+  $mainPlayPause.click(function togglePlayFromPlayerBar(){
+    if (currentSoundFile.isPaused()){
+      var $currentSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
+      $currentSongNumberCell.html(pauseButtonTemplate);
+      $mainPlayPause.html(playerBarPauseButton);
+      currentSoundFile.play();
+    } else if (currentSoundFile != null){
+      var $currentSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
+      $currentSongNumberCell.html(playButtonTemplate);
+      $mainPlayPause.html(playerBarPlayButton);
+      currentSoundFile.pause();
+    }
+
+  });
+});
 
 
   var nextSong = function() {
@@ -242,40 +306,14 @@ var getSongNumberCell = function(number) {
     return $('.song-item-number[data-song-number="' + number + '"]');
 }
 
+var seek = function(time) {
+    if (currentSoundFile) {
+        currentSoundFile.setTime(time);
+    }
+}
+
 var setVolume = function(volume) {
     if (currentSoundFile) {
         currentSoundFile.setVolume(volume);
     }
 };
-
-//and assigns currentlyPlayingSongNumber
-//and currentSongFromAlbum a new value based on the new
-//songNumber
-//note: these variables are globally set to "null"
-
-//vanilla JS version:
-//currentlyPlayingSongNumber = currentSongIndex+1;
-//currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
-//jQuery version:
-//$('currentlyPlayingSongNumber').empty();
-//$('currentlyPlayingSongNumber').append('currentSongIndex'+1);
-//$('currentSongFromAlbum').empty();
-//$('currentSongFromAlbum').append(currentAlbum.songs[currentSongIndex]);
-//note: I don't know if the preceding 4 lines are kosher,
-//because I'm refactoring a VARIABLE from a js file, not
-//a class or an html element.  Perhaps I should have used the
-//".attr()" method.
-// My jQuery version seems more verbose.
-
-//Write a function named getSongNumberCell that
-//takes one argument, number, and returns the song
-//number element that corresponds to that song number.
-
-// from line 70=>
-// function getSongNumberCell(number){
-//   var songNumber = parseInt(songNumberCell.attr('data-song-number'));
-// }
-
-// //Replace all instances where we use the selector
-// //with a getSongNumberCell() call.
-// getSongNumberCell(number);
